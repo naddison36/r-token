@@ -1,7 +1,7 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.20;
 
-import 'zeppelin-solidity/contracts/token/DetailedERC20.sol';
-import 'zeppelin-solidity/contracts/token/MintableToken.sol';
+import '../node_modules/zeppelin-solidity/contracts/token/ERC20/DetailedERC20.sol';
+import '../node_modules/zeppelin-solidity/contracts/token/ERC20/MintableToken.sol';
 import './ServiceRegistry.sol';
 import './RegulatorService.sol';
 

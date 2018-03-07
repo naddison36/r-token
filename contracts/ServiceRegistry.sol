@@ -1,7 +1,7 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.20;
 
 import './RegulatorService.sol';
-import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
+import '../node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol';
 
 /// @notice A service that points to a `RegulatorService`
 contract ServiceRegistry is Ownable {

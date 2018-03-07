@@ -1,7 +1,7 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.20;
 
-import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
-import 'zeppelin-solidity/contracts/token/DetailedERC20.sol';
+import '../node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol';
+import '../node_modules/zeppelin-solidity/contracts/token/ERC20/DetailedERC20.sol';
 import './RegulatedToken.sol';
 import './RegulatorService.sol';
 
@@ -10,13 +10,6 @@ import './RegulatorService.sol';
  * @author Bob Remeika
  */
 contract TokenRegulatorService is RegulatorService, Ownable {
-  /**
-   * @dev Throws if called by any account other than the admin
-   */
-  modifier onlyAdmins() {
-    require(msg.sender == admin || msg.sender == owner);
-    _;
-  }
 
   /// @dev Settings that affect token trading at a global level
   struct Settings {
@@ -56,9 +49,6 @@ contract TokenRegulatorService is RegulatorService, Ownable {
   /// @dev Permission bits for allowing a participant to receive tokens
   uint8 constant private PERM_RECEIVE = 0x2;
 
-  // @dev Address of the administrator
-  address public admin;
-
   /// @notice Permissions that allow/disallow token trades on a per token level
   mapping(address => Settings) private settings;
 
@@ -75,13 +65,6 @@ contract TokenRegulatorService is RegulatorService, Ownable {
 
   /// @dev Event raised when a participant permissions are set for a token
   event LogPermissionSet(address indexed token, address indexed participant, uint8 permission);
-
-  /// @dev Event raised when the admin address changes
-  event LogTransferAdmin(address indexed oldAdmin, address indexed newAdmin);
-
-  function TokenRegulatorService() public {
-    admin = msg.sender;
-  }
 
   /**
    * @notice Locks the ability to trade a token
@@ -120,24 +103,10 @@ contract TokenRegulatorService is RegulatorService, Ownable {
    * @param  _participant The address of the trade participant
    * @param  _permission Permission bits to be set
    */
-  function setPermission(address _token, address _participant, uint8 _permission) onlyAdmins public {
+  function setPermission(address _token, address _participant, uint8 _permission) onlyOwner public {
     participants[_token][_participant] = _permission;
 
     LogPermissionSet(_token, _participant, _permission);
-  }
-
-  /**
-   * @dev Allows the owner to transfer admin controls to newAdmin.
-   *
-   * @param newAdmin The address to transfer admin rights to.
-   */
-  function transferAdmin(address newAdmin) onlyOwner public {
-    require(newAdmin != address(0));
-
-    address oldAdmin = admin;
-    admin = newAdmin;
-
-    LogTransferAdmin(oldAdmin, newAdmin);
   }
 
   /**

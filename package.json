@@ -1,6 +1,6 @@
 {
   "name": "r-token",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Proof of concept for RegulatedToken",
   "main": "truffle.js",
   "directories": {
@@ -10,10 +10,15 @@
     "test": "truffle test"
   },
   "author": "Bob Remeika",
+  "contributors": [
+    "Nick Addison"
+  ],
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "solc": "^0.4.20"
+  },
   "dependencies": {
     "bignumber.js": "^4.1.0",
-    "zeppelin-solidity": "^1.4.0"
+    "zeppelin-solidity": "^1.7.0"
   }
 }
